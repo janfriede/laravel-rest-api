@@ -84,4 +84,23 @@ class ArticleController extends Controller
             'message' => 'Successfully deleted article!'
         ], 200);
     }
+
+    /**
+     * Display all resource.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function showAll(Request $request)
+    {
+        if($request->get('active')) {
+            $active = $request->get('active') === 'false' ? 0 : 1;
+
+            $articles = Article::where('active', $active)->get();
+        } else {
+            $articles = Article::all();
+        }
+
+        return response()->json($articles);
+    }
 }
